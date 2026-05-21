@@ -5,11 +5,7 @@ plugins {
 
 android {
     namespace = "lhq.cntt2.quanlychitieu"
-    compileSdk {
-        version = release(36) {
-            minorApiLevel = 1
-        }
-    }
+    compileSdk = 36 // Đã sửa lại cho đúng cú pháp
 
     defaultConfig {
         applicationId = "lhq.cntt2.quanlychitieu"
@@ -37,14 +33,21 @@ android {
 }
 
 dependencies {
+    // Firebase BoM
     implementation(platform("com.google.firebase:firebase-bom:34.13.0"))
+
+    // Thư viện cần thiết cho UI và Logic
     implementation(libs.appcompat)
     implementation(libs.material)
     implementation(libs.activity)
     implementation(libs.constraintlayout)
+
+    // Firebase
+    implementation("com.google.firebase:firebase-auth")
+    implementation("com.google.firebase:firebase-firestore")
+
+    // Testing
     testImplementation(libs.junit)
     androidTestImplementation(libs.ext.junit)
     androidTestImplementation(libs.espresso.core)
-    implementation("com.google.firebase:firebase-auth")
-    implementation("com.google.firebase:firebase-firestore")
 }
