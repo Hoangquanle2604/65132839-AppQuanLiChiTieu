@@ -43,7 +43,6 @@ public class LoginActivity extends AppCompatActivity {
             });
         });
 
-        // ĐÃ SỬA: Bỏ dấu // để lệnh chạy được
         tvRegister.setOnClickListener(v -> {
             Intent intent = new Intent(LoginActivity.this, RegisterActivity.class);
             startActivity(intent);

@@ -12,61 +12,49 @@
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
         android:background="#0288D1"
-        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
-        app:titleTextColor="@android:color/white" />
+        app:titleTextColor="@android:color/white"
+        app:navigationIcon="@android:drawable/ic_menu_revert" />
 
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:fillViewport="true">
+        android:padding="16dp">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:padding="24dp">
+            android:orientation="vertical">
 
             <RadioGroup
                 android:id="@+id/radioGroupType"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                android:background="@android:color/white"
-                android:padding="12dp"
-                android:elevation="2dp"
-                android:layout_marginBottom="24dp">
+                android:gravity="center"
+                android:layout_marginBottom="16dp">
 
                 <RadioButton
                     android:id="@+id/radioExpense"
-                    android:layout_width="0dp"
-                    android:layout_weight="1"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Khoản Chi"
+                    android:text="Chi tiêu"
                     android:checked="true"
-                    android:textColor="#212121"
-                    android:buttonTint="#D32F2F"
-                    android:textSize="15sp"
-                    android:textStyle="bold" />
+                    android:layout_marginRight="24dp"
+                    android:textSize="16sp" />
 
                 <RadioButton
                     android:id="@+id/radioIncome"
-                    android:layout_width="0dp"
-                    android:layout_weight="1"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Khoản Thu"
-                    android:textColor="#212121"
-                    android:buttonTint="#388E3C"
-                    android:textSize="15sp"
-                    android:textStyle="bold" />
+                    android:text="Thu nhập"
+                    android:textSize="16sp" />
             </RadioGroup>
 
             <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="16dp"
-                app:startIconDrawable="@android:drawable/ic_menu_edit"
-                app:startIconTint="#0288D1"
-                app:hintEnabled="false">
+                android:layout_marginTop="8dp"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/etAmount"
@@ -74,17 +62,14 @@
                     android:layout_height="wrap_content"
                     android:hint="Số tiền (đ)"
                     android:inputType="numberDecimal"
-                    android:textColor="#212121"
-                    android:textSize="16sp"
-                    android:paddingStart="44dp"/> </com.google.android.material.textfield.TextInputLayout>
+                    android:textSize="16sp" />
+            </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="16dp"
-                app:startIconDrawable="@android:drawable/ic_menu_sort_by_size"
-                app:startIconTint="#0288D1"
-                app:hintEnabled="false">
+                android:layout_marginTop="16dp"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/etCategory"
@@ -92,18 +77,14 @@
                     android:layout_height="wrap_content"
                     android:hint="Danh mục (Ví dụ: Ăn uống, Lương)"
                     android:inputType="text"
-                    android:textColor="#212121"
-                    android:textSize="16sp"
-                    android:paddingStart="44dp"/>
+                    android:textSize="16sp" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="32dp"
-                app:startIconDrawable="@android:drawable/ic_menu_search"
-                app:startIconTint="#0288D1"
-                app:hintEnabled="false">
+                android:layout_marginTop="16dp"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/etNote"
@@ -111,22 +92,20 @@
                     android:layout_height="wrap_content"
                     android:hint="Ghi chú thêm"
                     android:inputType="text"
-                    android:textColor="#212121"
-                    android:textSize="16sp"
-                    android:paddingStart="44dp"/>
+                    android:textSize="16sp" />
             </com.google.android.material.textfield.TextInputLayout>
 
-            <com.google.android.material.button.MaterialButton
+            <Button
                 android:id="@+id/btnSaveTransaction"
                 android:layout_width="match_parent"
-                android:layout_height="56dp"
-                android:text="LƯU GIAO DỊCH"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="28dp"
+                android:text="Lưu giao dịch"
+                android:backgroundTint="#0288D1"
+                android:textColor="@android:color/white"
                 android:textSize="16sp"
                 android:textStyle="bold"
-                app:backgroundTint="#0288D1"
-                app:cornerRadius="12dp"
-                app:elevation="4dp"
-                android:textColor="@android:color/white" />
+                android:padding="12dp" />
 
         </LinearLayout>
     </ScrollView>
