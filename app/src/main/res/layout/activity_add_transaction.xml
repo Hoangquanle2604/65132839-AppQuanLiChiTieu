@@ -5,80 +5,129 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="#F8F9FA">
+    android:background="#F4F6F8">
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
-        android:background="#1565C0"
+        android:background="#0288D1"
         android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
         app:titleTextColor="@android:color/white" />
 
-    <LinearLayout
+    <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:padding="24dp">
+        android:fillViewport="true">
 
-        <RadioGroup
-            android:id="@+id/radioGroupType"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_marginBottom="24dp">
-            <RadioButton
-                android:id="@+id/radioExpense"
-                android:layout_width="0dp"
-                android:layout_weight="1"
+            android:orientation="vertical"
+            android:padding="24dp">
+
+            <RadioGroup
+                android:id="@+id/radioGroupType"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Khoản Chi"
-                android:checked="true"
-                android:textSize="16sp" />
-            <RadioButton
-                android:id="@+id/radioIncome"
-                android:layout_width="0dp"
-                android:layout_weight="1"
+                android:orientation="horizontal"
+                android:background="@android:color/white"
+                android:padding="12dp"
+                android:elevation="2dp"
+                android:layout_marginBottom="24dp">
+
+                <RadioButton
+                    android:id="@+id/radioExpense"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    android:text="Khoản Chi"
+                    android:checked="true"
+                    android:textColor="#212121"
+                    android:buttonTint="#D32F2F"
+                    android:textSize="15sp"
+                    android:textStyle="bold" />
+
+                <RadioButton
+                    android:id="@+id/radioIncome"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    android:text="Khoản Thu"
+                    android:textColor="#212121"
+                    android:buttonTint="#388E3C"
+                    android:textSize="15sp"
+                    android:textStyle="bold" />
+            </RadioGroup>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Khoản Thu"
-                android:textSize="16sp" />
-        </RadioGroup>
+                android:layout_marginBottom="16dp"
+                app:startIconDrawable="@android:drawable/ic_menu_edit"
+                app:startIconTint="#0288D1"
+                app:hintEnabled="false">
 
-        <EditText
-            android:id="@+id/etAmount"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="Số tiền (đ)"
-            android:inputType="numberDecimal"
-            android:padding="16dp"
-            android:background="@android:drawable/edit_text"
-            android:layout_marginBottom="16dp"/>
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/etAmount"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Số tiền (đ)"
+                    android:inputType="numberDecimal"
+                    android:textColor="#212121"
+                    android:textSize="16sp"
+                    android:paddingStart="44dp"/> </com.google.android.material.textfield.TextInputLayout>
 
-        <EditText
-            android:id="@+id/etCategory"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="Danh mục (VD: Ăn uống)"
-            android:padding="16dp"
-            android:background="@android:drawable/edit_text"
-            android:layout_marginBottom="16dp"/>
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="16dp"
+                app:startIconDrawable="@android:drawable/ic_menu_sort_by_size"
+                app:startIconTint="#0288D1"
+                app:hintEnabled="false">
 
-        <EditText
-            android:id="@+id/etNote"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="Ghi chú"
-            android:padding="16dp"
-            android:background="@android:drawable/edit_text"
-            android:layout_marginBottom="32dp"/>
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/etCategory"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Danh mục (Ví dụ: Ăn uống, Lương)"
+                    android:inputType="text"
+                    android:textColor="#212121"
+                    android:textSize="16sp"
+                    android:paddingStart="44dp"/>
+            </com.google.android.material.textfield.TextInputLayout>
 
-        <Button
-            android:id="@+id/btnSaveTransaction"
-            android:layout_width="match_parent"
-            android:layout_height="56dp"
-            android:text="LƯU GIAO DỊCH"
-            android:textStyle="bold"
-            android:backgroundTint="#FF9800"
-            android:textColor="@android:color/white" />
-    </LinearLayout>
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="32dp"
+                app:startIconDrawable="@android:drawable/ic_menu_search"
+                app:startIconTint="#0288D1"
+                app:hintEnabled="false">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/etNote"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Ghi chú thêm"
+                    android:inputType="text"
+                    android:textColor="#212121"
+                    android:textSize="16sp"
+                    android:paddingStart="44dp"/>
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnSaveTransaction"
+                android:layout_width="match_parent"
+                android:layout_height="56dp"
+                android:text="LƯU GIAO DỊCH"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                app:backgroundTint="#0288D1"
+                app:cornerRadius="12dp"
+                app:elevation="4dp"
+                android:textColor="@android:color/white" />
+
+        </LinearLayout>
+    </ScrollView>
 </LinearLayout>
