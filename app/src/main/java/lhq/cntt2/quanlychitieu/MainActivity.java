@@ -42,7 +42,9 @@ public class MainActivity extends AppCompatActivity {
             if (transactions != null) {
                 adapter.setTransactions(transactions);
 
-                double totalBalance = 2000000;
+                // ĐÃ SỬA: Đặt lại số dư gốc mặc định là 0đ thay vì 2.000.000đ
+                double totalBalance = 0;
+
                 for (TransactionModel t : transactions) {
                     if ("INCOME".equals(t.getType())) {
                         totalBalance += t.getAmount();
