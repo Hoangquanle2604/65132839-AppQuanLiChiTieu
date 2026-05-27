@@ -18,16 +18,26 @@ public class TransactionRepository {
         void onFailure(Exception e);
     }
 
-    // 1. Hàm thêm giao dịch
+    // 1. Hàm thêm giao dịch (Đã tối ưu để lưu cả ID vào document mới nếu cần)
     public void addTransaction(TransactionModel transaction, TransactionCallback callback) {
         FirebaseFirestore.getInstance().collection("transactions")
                 .add(transaction)
-                .addOnSuccessListener(documentReference -> callback.onSuccess())
+                .addOnSuccessListener(documentReference -> {
+                    // Cập nhật ngược lại ID của Document vừa tạo vào chính nó để dữ liệu trên Firebase luôn sạch
+                    documentReference.update("transactionId", documentReference.getId())
+                            .addOnSuccessListener(aVoid -> callback.onSuccess())
+                            .addOnFailureListener(callback::onFailure);
+                })
                 .addOnFailureListener(callback::onFailure);
     }
 
     // 2. Hàm xóa giao dịch
     public void deleteTransaction(String transactionId, TransactionCallback callback) {
+        if (transactionId == null || transactionId.isEmpty()) {
+            callback.onFailure(new Exception("Transaction ID không hợp lệ (null hoặc rỗng)"));
+            return;
+        }
+
         FirebaseFirestore.getInstance().collection("transactions")
                 .document(transactionId)
                 .delete()
@@ -35,7 +45,7 @@ public class TransactionRepository {
                 .addOnFailureListener(callback::onFailure);
     }
 
-    // 3. Hàm lấy danh sách giao dịch
+    // 3. Hàm lấy danh sách giao dịch (Đã tối ưu hóa thứ tự gán ID)
     public void getTransactions(String userId, TransactionListCallback callback) {
         FirebaseFirestore.getInstance().collection("transactions")
                 .whereEqualTo("userId", userId)
@@ -45,12 +55,19 @@ public class TransactionRepository {
                         callback.onFailure(error);
                         return;
                     }
+
                     List<TransactionModel> list = new ArrayList<>();
                     if (value != null) {
                         for (QueryDocumentSnapshot doc : value) {
+                            // Chuyển dữ liệu từ Firestore thành đối tượng Java
                             TransactionModel tm = doc.toObject(TransactionModel.class);
-                            tm.setTransactionId(doc.getId());
-                            list.add(tm);
+
+                            // ĐÃ TỐI ƯU: Ép buộc lấy ID của Document trên Firestore gán vào Model
+                            // Việc này giúp sửa lỗi nút xóa kể cả khi trường transactionId trên Firebase đang bị null
+                            if (tm != null) {
+                                tm.setTransactionId(doc.getId());
+                                list.add(tm);
+                            }
                         }
                     }
                     callback.onSuccess(list);

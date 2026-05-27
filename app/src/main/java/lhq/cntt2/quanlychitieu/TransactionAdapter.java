@@ -16,11 +16,22 @@ public class TransactionAdapter extends RecyclerView.Adapter<TransactionAdapter.
     private List<TransactionModel> list = new ArrayList<>();
     private OnDeleteClickListener deleteListener;
 
-    public interface OnDeleteClickListener { void onDeleteClick(TransactionModel transaction); }
-    public void setOnDeleteClickListener(OnDeleteClickListener listener) { this.deleteListener = listener; }
+    // Interface để truyền sự kiện click xóa về MainActivity
+    public interface OnDeleteClickListener {
+        void onDeleteClick(TransactionModel transaction);
+    }
 
+    public void setOnDeleteClickListener(OnDeleteClickListener listener) {
+        this.deleteListener = listener;
+    }
+
+    // Cập nhật danh sách hiển thị và làm mới giao diện
     public void setTransactions(List<TransactionModel> transactions) {
-        this.list = transactions;
+        if (transactions != null) {
+            this.list = transactions;
+        } else {
+            this.list = new ArrayList<>();
+        }
         notifyDataSetChanged();
     }
 
@@ -34,35 +45,46 @@ public class TransactionAdapter extends RecyclerView.Adapter<TransactionAdapter.
     @Override
     public void onBindViewHolder(@NonNull TransactionViewHolder holder, int position) {
         TransactionModel tm = list.get(position);
-        holder.tvCategory.setText(tm.getCategory());
-        holder.tvNote.setText(tm.getNote());
 
+        // Tránh lỗi NullPointerException nếu dữ liệu có trường bị rỗng
+        holder.tvCategory.setText(tm.getCategory() != null ? tm.getCategory() : "Không rõ");
+        holder.tvNote.setText(tm.getNote() != null ? tm.getNote() : "");
+
+        // Định dạng số tiền hiển thị
         DecimalFormat df = new DecimalFormat("#,### đ");
         if ("EXPENSE".equals(tm.getType())) {
             holder.tvAmount.setText("- " + df.format(tm.getAmount()));
             holder.tvAmount.setTextColor(Color.RED);
         } else {
             holder.tvAmount.setText("+ " + df.format(tm.getAmount()));
-            holder.tvAmount.setTextColor(Color.parseColor("#4CAF50"));
+            holder.tvAmount.setTextColor(Color.parseColor("#4CAF50")); // Màu xanh lá cho khoản thu
         }
 
-        holder.btnDelete.setOnClickListener(v -> {
-            if (deleteListener != null) deleteListener.onDeleteClick(tm);
-        });
+        // ĐÃ TỐI ƯU: Kiểm tra sự kiện bấm nút xóa
+        if (holder.btnDelete != null) {
+            holder.btnDelete.setOnClickListener(v -> {
+                if (deleteListener != null) {
+                    deleteListener.onDeleteClick(tm);
+                }
+            });
+        }
     }
 
     @Override
-    public int getItemCount() { return list.size(); }
+    public int getItemCount() {
+        return list != null ? list.size() : 0;
+    }
 
     static class TransactionViewHolder extends RecyclerView.ViewHolder {
         TextView tvCategory, tvNote, tvAmount;
         ImageView btnDelete;
+
         public TransactionViewHolder(@NonNull View itemView) {
             super(itemView);
             tvCategory = itemView.findViewById(R.id.tvCategory);
             tvNote = itemView.findViewById(R.id.tvNote);
             tvAmount = itemView.findViewById(R.id.tvAmount);
-            btnDelete = itemView.findViewById(R.id.btnDelete); // Đảm bảo trong XML có ID này
+            btnDelete = itemView.findViewById(R.id.btnDelete); // Đảm bảo ID này trùng khớp 100% với file item_transaction.xml
         }
     }
 }

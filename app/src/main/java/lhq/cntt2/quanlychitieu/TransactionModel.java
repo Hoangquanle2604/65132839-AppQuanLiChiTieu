@@ -6,7 +6,7 @@ public class TransactionModel {
     private String transactionId;
     private String userId;
     private double amount;
-    private String type; // "INCOME" (Thu) hoặc "EXPENSE" (Chi)
+    private String type;
     private String category;
     private Timestamp timestamp;
     private String note;

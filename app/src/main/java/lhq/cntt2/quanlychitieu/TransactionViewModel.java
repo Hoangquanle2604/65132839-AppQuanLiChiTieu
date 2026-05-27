@@ -13,12 +13,17 @@ public class TransactionViewModel extends ViewModel {
     private final MutableLiveData<String> errorMessage = new MutableLiveData<>();
     private final MutableLiveData<List<TransactionModel>> transactionsLiveData = new MutableLiveData<>();
 
+    // Biến lưu lại userId hiện tại để hỗ trợ tự động làm mới dữ liệu
+    private String savedUserId = "USER_TEST_01";
+
     public LiveData<Boolean> getAddSuccess() { return addSuccess; }
     public LiveData<String> getErrorMessage() { return errorMessage; }
     public LiveData<List<TransactionModel>> getTransactionsLiveData() { return transactionsLiveData; }
 
     // Thêm giao dịch mới
     public void addTransaction(String userId, double amount, String type, String category, String note) {
+        this.savedUserId = userId; // Lưu lại userId
+
         TransactionModel transaction = new TransactionModel();
         transaction.setUserId(userId);
         transaction.setAmount(amount);
@@ -31,6 +36,8 @@ public class TransactionViewModel extends ViewModel {
             @Override
             public void onSuccess() {
                 addSuccess.setValue(true);
+                // ĐÃ SỬA: Gọi làm mới lại danh sách ngay lập tức sau khi thêm thành công
+                fetchTransactions(savedUserId);
             }
 
             @Override
@@ -45,7 +52,9 @@ public class TransactionViewModel extends ViewModel {
         repository.deleteTransaction(transactionId, new TransactionRepository.TransactionCallback() {
             @Override
             public void onSuccess() {
-                // Thành công: không cần làm gì, SnapshotListener sẽ tự động đẩy danh sách mới về
+                // ĐÃ SỬA: Vì phương thức lấy dữ liệu hiện tại chưa dùng SnapshotListener tự động cập nhật,
+                // chúng ta chủ động gọi fetchTransactions để lấy lại danh sách mới nhất sau khi xóa.
+                fetchTransactions(savedUserId);
             }
 
             @Override
@@ -57,6 +66,8 @@ public class TransactionViewModel extends ViewModel {
 
     // Tải danh sách giao dịch
     public void fetchTransactions(String userId) {
+        this.savedUserId = userId; // Cập nhật lại userId khi gọi hàm
+
         repository.getTransactions(userId, new TransactionRepository.TransactionListCallback() {
             @Override
             public void onSuccess(List<TransactionModel> transactions) {
