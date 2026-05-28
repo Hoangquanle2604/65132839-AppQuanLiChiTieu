@@ -22,7 +22,7 @@
         <activity android:name=".AddTransactionActivity" />
         <activity android:name=".RegisterActivity" />
         <activity android:name=".CalendarActivity" android:exported="false" />
-
+        <activity android:name=".ReportActivity" android:exported="false" />
     </application>
 
 </manifest>

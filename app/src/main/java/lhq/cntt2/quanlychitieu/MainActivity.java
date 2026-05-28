@@ -26,6 +26,8 @@ public class MainActivity extends AppCompatActivity {
         FloatingActionButton fabAddTransaction = findViewById(R.id.fabAddTransaction);
         LinearLayout layoutOpenCalendar = findViewById(R.id.layoutOpenCalendar);
 
+        LinearLayout layoutOpenReport = findViewById(R.id.layoutOpenReport);
+
         adapter = new TransactionAdapter();
         rvTransactions.setLayoutManager(new LinearLayoutManager(this));
         rvTransactions.setAdapter(adapter);
@@ -42,7 +44,7 @@ public class MainActivity extends AppCompatActivity {
             if (transactions != null) {
                 adapter.setTransactions(transactions);
 
-                // ĐÃ SỬA: Đặt lại số dư gốc mặc định là 0đ thay vì 2.000.000đ
+
                 double totalBalance = 0;
 
                 for (TransactionModel t : transactions) {
@@ -62,6 +64,13 @@ public class MainActivity extends AppCompatActivity {
         layoutOpenCalendar.setOnClickListener(v ->
                 startActivity(new Intent(MainActivity.this, CalendarActivity.class))
         );
+
+
+        if (layoutOpenReport != null) {
+            layoutOpenReport.setOnClickListener(v ->
+                    startActivity(new Intent(MainActivity.this, ReportActivity.class))
+            );
+        }
 
         fabAddTransaction.setOnClickListener(v ->
                 startActivity(new Intent(MainActivity.this, AddTransactionActivity.class))
