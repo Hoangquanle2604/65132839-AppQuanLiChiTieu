@@ -49,17 +49,6 @@
         app:layout_constraintTop_toBottomOf="@id/cardSummary"
         app:layout_constraintBottom_toTopOf="@id/bottomNavigationMock" />
 
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/fabAddTransaction"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="16dp"
-        android:src="@android:drawable/ic_input_add"
-        app:backgroundTint="#0288D1"
-        app:tint="@android:color/white"
-        app:layout_constraintBottom_toTopOf="@id/bottomNavigationMock"
-        app:layout_constraintEnd_toEndOf="parent" />
-
     <LinearLayout
         android:id="@+id/bottomNavigationMock"
         android:layout_width="match_parent"
@@ -70,11 +59,15 @@
         app:layout_constraintBottom_toBottomOf="parent">
 
         <LinearLayout
+            android:id="@+id/layoutOpenAddTransaction"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:gravity="center"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:clickable="true"
+            android:focusable="true"
+            android:background="?attr/selectableItemBackground">
             <ImageView
                 android:layout_width="24dp"
                 android:layout_height="24dp"
@@ -122,13 +115,11 @@
             android:clickable="true"
             android:focusable="true"
             android:background="?attr/selectableItemBackground">
-
             <ImageView
                 android:layout_width="24dp"
                 android:layout_height="24dp"
-                android:src="@android:drawable/ic_menu_sort_by_size"
+                android:src="@android:drawable/ic_menu_report_image"
                 app:tint="#757575" />
-
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

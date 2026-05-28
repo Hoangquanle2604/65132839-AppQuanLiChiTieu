@@ -50,7 +50,11 @@ public class AddTransactionActivity extends AppCompatActivity {
             String amountStr = etAmount.getText().toString().trim();
             String category = etCategory.getText().toString().trim();
             String note = etNote.getText().toString().trim();
-            String type = radioExpense.isChecked() ? "EXPENSE" : "INCOME";
+
+            String type = "EXPENSE";
+            if (!radioExpense.isChecked()) {
+                type = "INCOME";
+            }
 
             if (amountStr.isEmpty() || category.isEmpty()) {
                 Toast.makeText(this, "Vui lòng nhập đủ số tiền và danh mục", Toast.LENGTH_SHORT).show();

@@ -8,7 +8,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import java.text.DecimalFormat;
 
 public class MainActivity extends AppCompatActivity {
@@ -23,10 +22,11 @@ public class MainActivity extends AppCompatActivity {
 
         tvTotalBalance = findViewById(R.id.tvTotalBalance);
         RecyclerView rvTransactions = findViewById(R.id.rvTransactions);
-        FloatingActionButton fabAddTransaction = findViewById(R.id.fabAddTransaction);
         LinearLayout layoutOpenCalendar = findViewById(R.id.layoutOpenCalendar);
-
         LinearLayout layoutOpenReport = findViewById(R.id.layoutOpenReport);
+
+        // ĐÃ CHUYỂN ĐỔI: Thay thế nút bấm dấu cộng cũ bằng nút Nhập vào ở menu đáy
+        LinearLayout layoutOpenAddTransaction = findViewById(R.id.layoutOpenAddTransaction);
 
         adapter = new TransactionAdapter();
         rvTransactions.setLayoutManager(new LinearLayoutManager(this));
@@ -43,7 +43,6 @@ public class MainActivity extends AppCompatActivity {
         transactionViewModel.getTransactionsLiveData().observe(this, transactions -> {
             if (transactions != null) {
                 adapter.setTransactions(transactions);
-
 
                 double totalBalance = 0;
 
@@ -65,15 +64,17 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(new Intent(MainActivity.this, CalendarActivity.class))
         );
 
-
         if (layoutOpenReport != null) {
             layoutOpenReport.setOnClickListener(v ->
                     startActivity(new Intent(MainActivity.this, ReportActivity.class))
             );
         }
 
-        fabAddTransaction.setOnClickListener(v ->
-                startActivity(new Intent(MainActivity.this, AddTransactionActivity.class))
-        );
+        // ĐÃ CHUYỂN ĐỔI: Gán sự kiện click vào nút Nhập vào để khởi chạy màn hình thêm giao dịch
+        if (layoutOpenAddTransaction != null) {
+            layoutOpenAddTransaction.setOnClickListener(v ->
+                    startActivity(new Intent(MainActivity.this, AddTransactionActivity.class))
+            );
+        }
     }
 }

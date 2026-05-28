@@ -14,6 +14,7 @@ public class ReportActivity extends AppCompatActivity {
     private TransactionViewModel transactionViewModel;
     private TransactionAdapter adapter;
     private TextView tvCenterStatus;
+    private CircleChartView circleChartView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,6 +30,7 @@ public class ReportActivity extends AppCompatActivity {
         toolbar.setNavigationOnClickListener(v -> finish());
 
         tvCenterStatus = findViewById(R.id.tvCenterStatus);
+        circleChartView = findViewById(R.id.circleChartView);
         RecyclerView rvReportCategories = findViewById(R.id.rvReportCategories);
 
         adapter = new TransactionAdapter();
@@ -45,8 +47,13 @@ public class ReportActivity extends AppCompatActivity {
                     }
                 }
                 adapter.setTransactions(expenseList);
+
+                circleChartView.setTransactionData(expenseList);
+
                 if (!expenseList.isEmpty()) {
                     tvCenterStatus.setText("100.0%");
+                } else {
+                    tvCenterStatus.setText("0.0%");
                 }
             }
         });
