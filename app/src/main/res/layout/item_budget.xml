@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginHorizontal="8dp"
+    android:layout_marginVertical="6dp"
+    app:cardCornerRadius="12dp"
+    app:cardElevation="2dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="16dp">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp">
+
+            <TextView
+                android:id="@+id/tvBudgetItemCategory"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Danh mục"
+                android:textColor="#212121"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                android:layout_alignParentStart="true" />
+
+            <ImageView
+                android:id="@+id/imgDeleteBudget"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:src="@android:drawable/ic_menu_delete"
+                android:layout_alignParentEnd="true"
+                app:tint="#757575" />
+        </RelativeLayout>
+
+        <ProgressBar
+            android:id="@+id/pbBudgetProgress"
+            style="?android:attr/progressBarStyleHorizontal"
+            android:layout_width="match_parent"
+            android:layout_height="8dp"
+            android:progressDrawable="@android:drawable/progress_horizontal"
+            android:layout_marginBottom="8dp" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/tvBudgetSpent"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Đã chi: 0đ"
+                android:textColor="#E53935"
+                android:textSize="13sp"
+                android:layout_alignParentStart="true" />
+
+            <TextView
+                android:id="@+id/tvBudgetLimit"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Hạn mức: 0đ"
+                android:textColor="#757575"
+                android:textSize="13sp"
+                android:layout_alignParentEnd="true" />
+        </RelativeLayout>
+    </LinearLayout>
+</androidx.cardview.widget.CardView>

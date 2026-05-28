@@ -8,6 +8,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import java.text.DecimalFormat;
 
 public class MainActivity extends AppCompatActivity {
@@ -24,9 +25,8 @@ public class MainActivity extends AppCompatActivity {
         RecyclerView rvTransactions = findViewById(R.id.rvTransactions);
         LinearLayout layoutOpenCalendar = findViewById(R.id.layoutOpenCalendar);
         LinearLayout layoutOpenReport = findViewById(R.id.layoutOpenReport);
-
-        // ĐÃ CHUYỂN ĐỔI: Thay thế nút bấm dấu cộng cũ bằng nút Nhập vào ở menu đáy
-        LinearLayout layoutOpenAddTransaction = findViewById(R.id.layoutOpenAddTransaction);
+        LinearLayout layoutOpenBudget = findViewById(R.id.layoutOpenBudget);
+        FloatingActionButton fabAddTransaction = findViewById(R.id.fabAddTransaction);
 
         adapter = new TransactionAdapter();
         rvTransactions.setLayoutManager(new LinearLayoutManager(this));
@@ -70,9 +70,14 @@ public class MainActivity extends AppCompatActivity {
             );
         }
 
-        // ĐÃ CHUYỂN ĐỔI: Gán sự kiện click vào nút Nhập vào để khởi chạy màn hình thêm giao dịch
-        if (layoutOpenAddTransaction != null) {
-            layoutOpenAddTransaction.setOnClickListener(v ->
+        if (layoutOpenBudget != null) {
+            layoutOpenBudget.setOnClickListener(v ->
+                    startActivity(new Intent(MainActivity.this, BudgetActivity.class))
+            );
+        }
+
+        if (fabAddTransaction != null) {
+            fabAddTransaction.setOnClickListener(v ->
                     startActivity(new Intent(MainActivity.this, AddTransactionActivity.class))
             );
         }

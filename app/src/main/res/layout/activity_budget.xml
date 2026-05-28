@@ -8,7 +8,7 @@
     android:background="#F4F6F8">
 
     <androidx.appcompat.widget.Toolbar
-        android:id="@+id/toolbar"
+        android:id="@+id/toolbarBudget"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
         android:background="#0288D1"
@@ -18,9 +18,9 @@
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="16dp"
+        android:layout_margin="12dp"
         app:cardCornerRadius="12dp"
-        app:cardElevation="4dp">
+        app:cardElevation="3dp">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -28,82 +28,48 @@
             android:orientation="vertical"
             android:padding="16dp">
 
-            <RadioGroup
-                android:id="@+id/radioGroupType"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:layout_marginBottom="16dp"
-                android:weightSum="2">
-
-                <RadioButton
-                    android:id="@+id/radioExpense"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="Chi tiêu"
-                    android:checked="true" />
-
-                <RadioButton
-                    android:id="@+id/radioIncome"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="Thu nhập" />
-            </RadioGroup>
-
             <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
 
                 <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/etAmount"
+                    android:id="@+id/etBudgetCategory"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="Số tiền (đ)"
-                    android:inputType="number" />
-            </com.google.android.material.textfield.TextInputLayout>
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Chọn danh mục ngân sách:"
-                android:textColor="#757575"
-                android:textSize="14sp"
-                android:layout_marginTop="16dp"
-                android:layout_marginBottom="4dp" />
-
-            <Spinner
-                android:id="@+id/spinnerCategory"
-                android:layout_width="match_parent"
-                android:layout_height="48dp"
-                android:background="@android:drawable/btn_dropdown"
-                android:spinnerMode="dropdown" />
-
-            <com.google.android.material.textfield.TextInputLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
-
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/etNote"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="Ghi chú (không bắt buộc)"
+                    android:hint="Danh mục ngân sách (Ví dụ: Ăn uống)"
                     android:inputType="text" />
             </com.google.android.material.textfield.TextInputLayout>
 
-            <Button
-                android:id="@+id/btnSaveTransaction"
+            <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="24dp"
-                android:text="Lưu giao dịch"
+                android:layout_marginTop="12dp"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/etBudgetLimit"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Số tiền giới hạn (đ)"
+                    android:inputType="number" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <Button
+                android:id="@+id/btnSaveBudget"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:text="Thiết lập ngân sách"
                 android:backgroundTint="#0288D1"
                 android:textColor="@android:color/white"
                 android:textStyle="bold" />
         </LinearLayout>
     </androidx.cardview.widget.CardView>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rvBudgets"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="8dp" />
 </LinearLayout>

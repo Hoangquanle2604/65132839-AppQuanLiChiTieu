@@ -23,6 +23,8 @@
         <activity android:name=".RegisterActivity" />
         <activity android:name=".CalendarActivity" android:exported="false" />
         <activity android:name=".ReportActivity" android:exported="false" />
+        <activity
+            android:name=".BudgetActivity" android:exported="false" />
     </application>
 
 </manifest>
