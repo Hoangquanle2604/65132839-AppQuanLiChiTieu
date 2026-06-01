@@ -1,12 +1,18 @@
 # 65132839-AppQuanLiChiTieu
+# Ảnh Demo project App Quản Lí Chi Tiêu
+# Màn hình chính
+<img width="371" height="810" alt="image" src="https://github.com/user-attachments/assets/5e3b79a7-2057-4837-a2d6-ad59caa3e005" />
+# Màn hình xem Lịch
+<img width="375" height="816" alt="image" src="https://github.com/user-attachments/assets/413d29c4-f854-4e1a-b781-b7e9d2ca537c" />
+# Màn hình quản lí ngân sách
+<img width="369" height="811" alt="image" src="https://github.com/user-attachments/assets/c2818580-34b3-411b-9519-b63dc3a6582d" />
+# Màn hình báo cáo chi tiêu
+<img width="369" height="810" alt="image" src="https://github.com/user-attachments/assets/41dced79-32a7-48ce-a13f-22ac05fdfef3" />
 
-<img width="362" height="799" alt="image" src="https://github.com/user-attachments/assets/1d94e012-fa7d-4929-967a-9dc15def6af4" />
 
-<img width="364" height="804" alt="image" src="https://github.com/user-attachments/assets/d9523e74-0539-4104-a6c2-c9a0de8d0685" />
 
-<img width="365" height="809" alt="image" src="https://github.com/user-attachments/assets/926be6c4-f7d3-46f9-80bd-42d508534c59" />
 
-<img width="368" height="806" alt="image" src="https://github.com/user-attachments/assets/f4a251ba-4bec-41fc-ad05-cef263b0cde3" />
+
 
 
 
