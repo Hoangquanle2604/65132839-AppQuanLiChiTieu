@@ -25,7 +25,7 @@ import java.util.Map;
 public class AddTransactionActivity extends AppCompatActivity {
     private TransactionViewModel viewModel;
     private Spinner spinnerCategory;
-    private TextView tvCategoryTitle; // Thêm để ẩn/hiện tiêu đề danh mục nếu cần
+    private TextView tvCategoryTitle;
     private SharedPreferences sharedPreferences;
     private List<String> categoryList = new ArrayList<>();
     private String currentUserId;
@@ -35,14 +35,13 @@ public class AddTransactionActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_transaction);
 
-        // 1. Kiểm tra trạng thái đăng nhập để lấy Uid động
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         if (user == null) {
             startActivity(new Intent(AddTransactionActivity.this, LoginActivity.class));
             finish();
             return;
         }
-        currentUserId = user.getUid(); // Đây là ID riêng biệt của từng tài khoản
+        currentUserId = user.getUid();
 
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -54,17 +53,14 @@ public class AddTransactionActivity extends AppCompatActivity {
 
         viewModel = new ViewModelProvider(this).get(TransactionViewModel.class);
 
-        // Đổi cấu trúc đọc SharedPreferences theo Uid riêng biệt giống BudgetActivity
+
         sharedPreferences = getSharedPreferences("BudgetPrefs_" + currentUserId, Context.MODE_PRIVATE);
 
-        RadioGroup radioGroupType = findViewById(R.id.radioGroupType); // Giả định layout có RadioGroup bọc 2 nút Radio
         RadioButton radioExpense = findViewById(R.id.radioExpense);
         RadioButton radioIncome = findViewById(R.id.radioIncome);
         EditText etAmount = findViewById(R.id.etAmount);
         spinnerCategory = findViewById(R.id.spinnerCategory);
 
-        // Cố gắng ánh xạ TextView tiêu đề danh mục (nếu trong xml có, ví dụ: tvCategory hoặc tương tự)
-        // Nếu không có, ông có thể bỏ qua biến tvCategoryTitle này
         int resTvCatId = getResources().getIdentifier("tvCategoryTitle", "id", getPackageName());
         if (resTvCatId != 0) {
             tvCategoryTitle = findViewById(resTvCatId);
@@ -73,17 +69,21 @@ public class AddTransactionActivity extends AppCompatActivity {
         EditText etNote = findViewById(R.id.etNote);
         Button btnSave = findViewById(R.id.btnSaveTransaction);
 
+        if (radioExpense != null) {
+            radioExpense.setChecked(true);
+        }
         loadCategoriesFromBudget();
 
-        // 2. Lắng nghe sự kiện thay đổi Thu nhập / Chi tiêu để ẩn/hiện Spinner danh mục
         if (radioExpense != null && radioIncome != null) {
             radioExpense.setOnClickListener(v -> {
+                //=====>>
                 spinnerCategory.setVisibility(View.VISIBLE);
                 if (tvCategoryTitle != null) tvCategoryTitle.setVisibility(View.VISIBLE);
+                loadCategoriesFromBudget();
             });
-
+            //======>
             radioIncome.setOnClickListener(v -> {
-                spinnerCategory.setVisibility(View.GONE); // Ẩn Spinner chọn danh mục chi tiêu đi
+                spinnerCategory.setVisibility(View.GONE);
                 if (tvCategoryTitle != null) tvCategoryTitle.setVisibility(View.GONE);
             });
         }
@@ -106,7 +106,7 @@ public class AddTransactionActivity extends AppCompatActivity {
             String note = etNote.getText().toString().trim();
 
             String type = "EXPENSE";
-            if (!radioExpense.isChecked()) {
+            if (radioIncome != null && radioIncome.isChecked()) {
                 type = "INCOME";
             }
 
@@ -115,7 +115,7 @@ public class AddTransactionActivity extends AppCompatActivity {
                 return;
             }
 
-            String selectedCategory = "Thu nhập"; // Mặc định nếu là INCOME thì gán danh mục là "Thu nhập"
+            String selectedCategory = "Thu nhập";
 
             if ("EXPENSE".equals(type)) {
                 if (spinnerCategory.getSelectedItem() == null || "Chưa có ngân sách".equals(spinnerCategory.getSelectedItem().toString())) {
@@ -127,7 +127,6 @@ public class AddTransactionActivity extends AppCompatActivity {
 
             try {
                 double amount = Double.parseDouble(amountStr);
-                // 3. Thay thế USER_TEST_01 bằng currentUserId động
                 viewModel.addTransaction(currentUserId, amount, type, selectedCategory, note);
             } catch (NumberFormatException e) {
                 Toast.makeText(this, "Số tiền nhập vào không hợp lệ", Toast.LENGTH_SHORT).show();
@@ -137,13 +136,15 @@ public class AddTransactionActivity extends AppCompatActivity {
 
     private void loadCategoriesFromBudget() {
         categoryList.clear();
-        Map<String, ?> allEntries = sharedPreferences.getAll();
-        for (Map.Entry<String, ?> entry : allEntries.entrySet()) {
-            if (entry.getValue() instanceof Float) {
-                String catName = entry.getKey();
-                if (catName != null && !catName.isEmpty()) {
-                    String formattedName = catName.substring(0, 1).toUpperCase() + catName.substring(1);
-                    categoryList.add(formattedName);
+        if (sharedPreferences != null) {
+            Map<String, ?> allEntries = sharedPreferences.getAll();
+            if (allEntries != null) {
+                for (Map.Entry<String, ?> entry : allEntries.entrySet()) {
+                    String catName = entry.getKey();
+                    if (catName != null && !catName.isEmpty()) {
+                        String formattedName = catName.substring(0, 1).toUpperCase() + catName.substring(1);
+                        categoryList.add(formattedName);
+                    }
                 }
             }
         }
@@ -154,6 +155,8 @@ public class AddTransactionActivity extends AppCompatActivity {
 
         ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, categoryList);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spinnerCategory.setAdapter(adapter);
+        if (spinnerCategory != null) {
+            spinnerCategory.setAdapter(adapter);
+        }
     }
 }

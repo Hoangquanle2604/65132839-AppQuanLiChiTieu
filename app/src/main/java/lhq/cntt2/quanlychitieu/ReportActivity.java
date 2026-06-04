@@ -1,5 +1,6 @@
 package lhq.cntt2.quanlychitieu;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.widget.Button;
@@ -10,6 +11,8 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -28,11 +31,21 @@ public class ReportActivity extends AppCompatActivity {
     private boolean isMonthMode = true;
     private List<TransactionModel> allTransactions = new ArrayList<>();
     private final DecimalFormat formatter = new DecimalFormat("#,###");
+    private String currentUserId; // Thêm biến lưu ID động
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_report);
+
+        // 1. KIỂM TRA ĐĂNG NHẬP ĐỂ LẤY UID ĐỘNG CỦA TÀI KHOẢN HIỆN TẠI
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        if (user == null) {
+            startActivity(new Intent(ReportActivity.this, LoginActivity.class));
+            finish();
+            return;
+        }
+        currentUserId = user.getUid();
 
         Toolbar toolbar = findViewById(R.id.toolbarReport);
         setSupportActionBar(toolbar);
@@ -105,7 +118,8 @@ public class ReportActivity extends AppCompatActivity {
             filterAndProcessData();
         });
 
-        transactionViewModel.fetchTransactions("USER_TEST_01");
+
+        transactionViewModel.fetchTransactions(currentUserId);
     }
 
     private void updateTimeDisplay() {
@@ -118,7 +132,7 @@ public class ReportActivity extends AppCompatActivity {
             tvTimeDisplay.setText(String.valueOf(year));
         }
     }
-    //
+    //======>
     private void filterAndProcessData() {
         List<TransactionModel> filteredList = new ArrayList<>();
         double totalExpense = 0;
@@ -131,6 +145,7 @@ public class ReportActivity extends AppCompatActivity {
             if (t.getTimestamp() == null) continue;
 
             Calendar tCal = Calendar.getInstance();
+            //=====>
             tCal.setTime(t.getTimestamp().toDate());
 
             boolean matches = false;
@@ -165,6 +180,9 @@ public class ReportActivity extends AppCompatActivity {
         }
 
         adapter.setTransactions(filteredList);
-        circleChartView.setTransactionData(filteredList);
+        if (circleChartView != null) {
+            //=====>
+            circleChartView.setTransactionData(filteredList);
+        }
     }
 }

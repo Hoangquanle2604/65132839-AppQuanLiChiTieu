@@ -25,7 +25,6 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        // Kiểm tra trạng thái đăng nhập của Firebase
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         if (user == null) {
             startActivity(new Intent(MainActivity.this, LoginActivity.class));
@@ -52,7 +51,7 @@ public class MainActivity extends AppCompatActivity {
                 transactionViewModel.deleteTransaction(transaction.getTransactionId());
             }
         });
-
+        //===>
         transactionViewModel.getTransactionsLiveData().observe(this, transactions -> {
             if (transactions != null) {
                 adapter.setTransactions(transactions);
@@ -69,7 +68,6 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        // Thay thế USER_TEST_01 bằng Uid động của tài khoản đăng nhập
         transactionViewModel.fetchTransactions(currentUserId);
 
         layoutOpenCalendar.setOnClickListener(v ->
