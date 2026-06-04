@@ -4,6 +4,8 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 import com.google.firebase.Timestamp;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import java.util.List;
 
 public class TransactionViewModel extends ViewModel {
@@ -13,15 +15,17 @@ public class TransactionViewModel extends ViewModel {
     private final MutableLiveData<String> errorMessage = new MutableLiveData<>();
     private final MutableLiveData<List<TransactionModel>> transactionsLiveData = new MutableLiveData<>();
 
-    private String savedUserId = "USER_TEST_01";
+    // XOÁ BỎ DÒNG KHAI BÁO CỨNG "USER_TEST_01". Thay vào đó dùng hàm lấy Uid trực tiếp từ Firebase Auth an toàn tuyệt đối
+    private String getCurrentUserId() {
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        return (user != null) ? user.getUid() : "USER_TEST_01";
+    }
 
     public LiveData<Boolean> getAddSuccess() { return addSuccess; }
     public LiveData<String> getErrorMessage() { return errorMessage; }
     public LiveData<List<TransactionModel>> getTransactionsLiveData() { return transactionsLiveData; }
 
     public void addTransaction(String userId, double amount, String type, String category, String note) {
-        this.savedUserId = userId;
-
         TransactionModel transaction = new TransactionModel();
         transaction.setUserId(userId);
         transaction.setAmount(amount);
@@ -34,7 +38,8 @@ public class TransactionViewModel extends ViewModel {
             @Override
             public void onSuccess() {
                 addSuccess.setValue(true);
-                fetchTransactions(savedUserId);
+                // Đồng bộ lại đúng tài khoản vừa thêm
+                fetchTransactions(userId);
             }
 
             @Override
@@ -48,7 +53,8 @@ public class TransactionViewModel extends ViewModel {
         repository.deleteTransaction(transactionId, new TransactionRepository.TransactionCallback() {
             @Override
             public void onSuccess() {
-                fetchTransactions(savedUserId);
+                // SỬA TẠI ĐÂY: Khi xoá xong, lấy đúng Uid của tài khoản đang đăng nhập để làm tươi (refresh) danh sách
+                fetchTransactions(getCurrentUserId());
             }
 
             @Override
@@ -59,8 +65,7 @@ public class TransactionViewModel extends ViewModel {
     }
 
     public void fetchTransactions(String userId) {
-        this.savedUserId = userId;
-
+        // Luôn truyền userId động vào Repository
         repository.getTransactions(userId, new TransactionRepository.TransactionListCallback() {
             @Override
             public void onSuccess(List<TransactionModel> transactions) {

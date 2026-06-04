@@ -63,6 +63,7 @@ public class BudgetActivity extends AppCompatActivity {
             }
 
             float limit = Float.parseFloat(limitStr);
+            //
             sharedPreferences.edit().putFloat(category.toLowerCase(), limit).apply();
 
             etBudgetCategory.setText("");

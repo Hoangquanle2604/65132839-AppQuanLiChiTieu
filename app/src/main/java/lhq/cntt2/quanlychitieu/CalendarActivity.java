@@ -45,6 +45,7 @@ public class CalendarActivity extends AppCompatActivity {
         rvTransactions.setAdapter(adapter);
 
         Calendar calendar = Calendar.getInstance();
+       //
         SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault());
         selectedDateStr = sdf.format(calendar.getTime());
 
@@ -56,7 +57,7 @@ public class CalendarActivity extends AppCompatActivity {
             }
         });
         transactionViewModel.fetchTransactions("USER_TEST_01");
-
+        //
         calendarView.setOnDateChangeListener((view, year, month, dayOfMonth) -> {
             selectedDateStr = String.format(Locale.getDefault(), "%02d/%02d/%d", dayOfMonth, (month + 1), year);
             filterTransactionsByDate(selectedDateStr);
