@@ -3,6 +3,7 @@
 Link demo App Quản lí chi tiêu: https://youtu.be/MovJ9cn7xNg?si=8xQ6KKKU6xMhjDAx
 
 Link báo cáo dự án: https://docs.google.com/document/d/1RA0mClumn1qAEOqmxIaMko7Yzeam-lr8wcghpJrNv_c/edit?pli=1&tab=t.0#heading=h.ki7ce0k8eymq
+
 Ảnh MainActivity
 
 <img width="371" height="810" alt="image" src="https://github.com/user-attachments/assets/5e3b79a7-2057-4837-a2d6-ad59caa3e005" />
